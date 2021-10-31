@@ -11,10 +11,11 @@
 /// This code is free software; you can redistribute it and/or modify it  ///
 /// without any restrictions.                                             ///
 ///                                                                       ///
-/// This code is distributed as a part of home work (task 2.9.x) in the   ///
-/// hope that it will work correctly and will be useful, but WITHOUT ANY  ///
-/// WARRANTY; without even the implied warranty of MERCHANTABILITY or     ///
-/// FITNESS FOR A PARTICULAR PURPOSE. JUST ENJOY IT! :)                   ///
+/// This code is distributed as a part of home work (practicum task, unit ///
+/// 3) in the hope that it will work correctly and will be useful, but    ///
+/// WITHOUT ANY WARRANTY; without even the implied warranty of            ///
+/// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                  /// 
+/// JUST ENJOY IT! :)                                                     ///
 ///-----------------------------------------------------------------------///
 /// File created on: 2021-10-29                                           ///
 /// @author Roman Berngardt  [mailto: roman@berngardt.eu]                 ///
