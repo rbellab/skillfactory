@@ -1,5 +1,5 @@
 public class Aircraft extends Transport {
-    public void moveIt() {
-        System.out.println("Aircraft is flying now!");
+    public Aircraft() {
+        super("Aircraft", "flying");
     }
 }

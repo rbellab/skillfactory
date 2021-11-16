@@ -1,2 +1,2 @@
-public interface ISubject {
+public interface ISubject extends IMovable {
 }

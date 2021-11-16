@@ -1,13 +1,12 @@
 public class Loader {
     public static void main(String[] args) {
-        Ball ball = new Ball();
-        Bicycle bicycle = new Bicycle();
-        Box box = new Box();
-        Aircraft aircraft = new Aircraft();
+        moveMovable(new Aircraft());
+        moveMovable(new Bicycle());
+        moveMovable(new Box());
+        moveMovable(new Ball());
+    }
 
-        ball.moveIt();
-        bicycle.moveIt();
-        box.moveIt();
-        aircraft.moveIt();
+    public static void moveMovable(IMovable movable) {
+        movable.moveIt();
     }
 }
