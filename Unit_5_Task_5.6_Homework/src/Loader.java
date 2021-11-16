@@ -1,5 +1,13 @@
 public class Loader {
     public static void main(String[] args) {
-        System.out.println("Hello!");
+        Ball ball = new Ball();
+        Bicycle bicycle = new Bicycle();
+        Box box = new Box();
+        Aircraft aircraft = new Aircraft();
+
+        ball.moveIt();
+        bicycle.moveIt();
+        box.moveIt();
+        aircraft.moveIt();
     }
 }
