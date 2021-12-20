@@ -168,43 +168,47 @@ public class FileIOChecker {
             }
         }
 
-        // Create a new file
-        if (dataFile.createNewFile()) {
-            System.out.println("ИНФА: Файл '" + dataFile.getName() + "' успешно создан!");
-            // Generate the test data (BUF_SIZE bytes)
-            ByteInputStreamReader bisr = new ByteInputStreamReader(new ByteInputStream());
-            byte[] dataToWrite = new byte[BUF_SIZE];
-            if (dataToWrite.length == bisr.read(dataToWrite, dataToWrite.length)) {
-                System.out.println("ИНФА: Данные успрешно сгенерированы!");
-                // Write the test data to the file
-                DataFileWriter dataFileWriter = new DataFileWriter(dataFile);
-                dataFileWriter.write(dataToWrite);
-                dataFileWriter.close();
+        try {
+            if (dataFile.createNewFile()) {
+                System.out.println("ИНФА: Файл '" + dataFile.getName() + "' успешно создан!");
+                try (
+                        ByteInputStreamReader bisr = new ByteInputStreamReader(new ByteInputStream());
+                        DataFileWriter dataFileWriter = new DataFileWriter(dataFile);
+                        DataFileReader dataFileReader = new DataFileReader(dataFile);
+                ) {
+                    byte[] dataToWrite = new byte[BUF_SIZE];
+                    if (dataToWrite.length == bisr.read(dataToWrite, dataToWrite.length)) {
+                        System.out.println("ИНФА: Данные успрешно сгенерированы!");
+                        // Write the test data to the file
+                        dataFileWriter.write(dataToWrite);
+                        // Read the data from the file back
+                        byte[] dataToAnalyse = new byte[BUF_SIZE];
+                        dataFileReader.read(dataToAnalyse, BUF_SIZE);
 
-                // Read the data from the file back
-                byte[] dataToAnalyse = new byte[BUF_SIZE];
-                DataFileReader dataFileReader = new DataFileReader(dataFile);
-                dataFileReader.read(dataToAnalyse, BUF_SIZE);
+                        // Check, if the data match
+                        boolean isDataMatch = true;
+                        for (int i = 0; i < BUF_SIZE; i++) {
+                            if (dataToWrite[i] != dataToAnalyse[i]) {
+                                System.out.println("i="+i+" w="+dataToWrite[i]+" r="+dataToAnalyse[i]);
+                                isDataMatch = false;
+                                break;
+                            }
+                        }
 
-                // Check, if the data match
-                boolean isDataMatch = true;
-                for (int i = 0; i < BUF_SIZE; i++) {
-                    if (dataToWrite[i] != dataToAnalyse[i]) {
-                        isDataMatch = false;
-                        break;
+                        // Print out the result
+                        if (isDataMatch) {
+                            System.out.println("ИНФА: Записанные и прочитанные данные совпадают!");
+                        } else {
+                            System.err.println("ОШИБКА: Записанные и прочитанные данные НЕ совпадают!");
+                        }
+                    } else {
+                        System.err.println("ОШИБКА: Проблема при генерации данных!");
                     }
+                } catch (IOException exc) {
+                    System.err.println("ОШИБКА: Проблема при работе с файлом '" + dataFile.getName() + "'!");
                 }
-
-                // Print out the result
-                if (isDataMatch) {
-                    System.out.println("ИНФА: Записанные и прочитанные данные совпадают!");
-                } else {
-                    System.err.println("ОШИБКА: Записанные и прочитанные данные НЕ совпадают!");
-                }
-            } else {
-                System.err.println("ОШИБКА: Проблема при генерации данных!");
             }
-        } else {
+        } catch (IOException exc) {
             System.err.println("ОШИБКА: Проблема при создании файла '" + dataFile.getName() + "'!");
         }
     }
